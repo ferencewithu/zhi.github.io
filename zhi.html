@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+	<title>查询接龙情况</title>
+</head>
+<body>
+	<h1>查询接龙情况</h1>
+	<form>
+		<label for="data">请输入数据：</label><br>
+		<textarea id="data" name="data" rows="5" cols="50"></textarea><br>
+		<input type="button" value="保存" onclick="saveData()">
+	</form>
+
+	<div id="output"></div>
+
+	<script>
+		var classList = ['王瑞荣', '刘灵通', '王颖鹏', '田佳鹏', '翁寿滔', '谢晨晨', '张盛果', '樊陈轩宇', '黄浩铭', '李烨杭',
+		'孙锦豪','谢静伟', '毛定雯', '方波', '周佳骏', '彭云思', '詹蓉萍', '刘婧', '李思源', '王润翔', '吴逵杰', '尤文龙','张继升',
+		'程魁', '李文辉', '陈飚', '朱保合', '靳博洋', '宋江涵', '崔咏', '张瑞', '刘炬红', '冉东豪', '程俊元','胡茜婷', '金秋月',
+		'赵陈陈', '江厚萍', '金芳', '杨佳琳', '李思思', '李婉茹', '张瑶瑶', '冉思思', '汪潇','付钰琴', '王盛'];
+
+		function saveData() {
+			// 获取textarea元素
+			var dataTextarea = document.getElementById("data");
+			// 将输入的数据按行分割成数组
+			var dataArray = dataTextarea.value.split("\n");
+			// 声明一个空数组来保存第二个元素
+			var secondElements = [];
+			// 遍历数组，将每行字符串按空格分割后的第二个元素保存到secondElements数组中
+			for (var i = 0; i < dataArray.length; i++) {
+				var lineArray = dataArray[i].split(" ");
+				secondElements.push(lineArray[1]);
+			}
+			// 将数组输出到页面上
+			var outputDiv = document.getElementById("output");
+			outputDiv.innerHTML = "已接龙:<br>" + secondElements.join(", ");
+
+			// 查找班级名单中没出现在数组中的元素
+			var notInArray = [];
+			for (var i = 0; i < classList.length; i++) {
+				if (secondElements.indexOf(classList[i]) === -1) {
+					notInArray.push(classList[i]);
+				}
+			}
+			// 查找数组中不在班级名单中的元素
+			var notInClassList = [];
+			for (var i = 0; i < secondElements.length; i++) {
+				if (classList.indexOf(secondElements[i]) === -1) {
+					notInClassList.push(secondElements[i]);
+				}
+			}
+			// 将没出现在数组中的元素输出到页面上
+			if (notInArray.length > 0) {
+				outputDiv.innerHTML += "<br>未接龙：<br>" + notInArray.join(", ");
+			}
+			// 将不在班级名单中的元素输出到页面上
+			if (notInClassList.length > 0) {
+				outputDiv.innerHTML += "<br>不在班级名单中的元素为：<br>" + notInClassList.join(", ");
+			}
+		}
+	</script>
+</body>
+</html>
